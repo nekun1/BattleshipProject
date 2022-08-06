@@ -26,18 +26,22 @@ namespace ConsoleInterface
 
             PlayerInfoModel output = new PlayerInfoModel();
 
+            output.UserName = AskForUsersName();
+
             GameLogic.DrawGrid(output);
 
-            PlaceShips(output);
+            PlaceShips(output); 
 
             Console.Clear();
 
             return output;
         }
 
-        static void AskForUsersName()
+        static string AskForUsersName()
         {
-            
+            Console.WriteLine("What's your name?");
+            string input = Console.ReadLine();
+            return input;
         }
 
         private static void PlaceShips(PlayerInfoModel model)
