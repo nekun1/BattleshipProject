@@ -1,12 +1,12 @@
 ﻿using System;
-using BattleLib;
-using BattleLib.Models;
+using BattleLibDotnet;
+using BattleLibDotnet.Models;
 
 namespace ConsoleInterface
 {
     class Program
     {
-        static void Main()
+        static void Main(string[] args)
         {
             WelcomeText();
             PlayerInfoModel player1 = CreatePlayer("Player 1");
@@ -24,10 +24,9 @@ namespace ConsoleInterface
         {
             Console.WriteLine($"Player information for {playerIdentifier}");
 
-            PlayerInfoModel output = new()
-            {
-                UserName = AskForUsersName()
-            };
+            PlayerInfoModel output = new PlayerInfoModel();
+
+            output.UserName = AskForUsersName();
 
             GameLogic.DrawGrid(output);
 
@@ -41,11 +40,7 @@ namespace ConsoleInterface
         static string AskForUsersName()
         {
             Console.WriteLine("What's your name?");
-            string? input = Console.ReadLine();
-            if(input == null)
-            {
-                input = "";
-            }
+            string input = Console.ReadLine();
             return input;
         }
 
@@ -54,7 +49,7 @@ namespace ConsoleInterface
             do
             {
                 Console.Write($"Where do you want to place your ship number {model.ShipList.Count + 1}: ");
-                string? location = Console.ReadLine();
+                string location = Console.ReadLine();
 
                 bool isValidLocation = GameLogic.PlaceShip(model, location);
 
