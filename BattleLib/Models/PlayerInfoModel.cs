@@ -9,7 +9,7 @@ namespace BattleLib.Models
     public class PlayerInfoModel
     {
         public string UserName { get; set; }
-        public List<GridSpotModel> ShipList { get; set; }
-        public List<GridSpotModel> ShotsFired { get; set; }
+        public List<GridSpotModel> ShipList { get; set; } = new List<GridSpotModel>();
+        public List<GridSpotModel> ShotGrid { get; set; } = new List<GridSpotModel>();
     }
 }
