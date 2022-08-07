@@ -40,6 +40,17 @@ namespace BattleLibDotnet
 
         public static bool PlaceShip(PlayerInfoModel model, string location)
         {
+            string locationLetter = location.Substring(0, 1);
+            Console.WriteLine(locationLetter);
+            int locationNumber = Int32.Parse(location.Substring(1, 1));
+            Console.WriteLine(locationNumber);
+            GridSpotModel ship = new GridSpotModel
+            {
+                SpotLetter = locationLetter,
+                SpotNumber = locationNumber,
+                Status = GridSpotStatus.Empty
+            };
+            model.ShipList.Add(ship);
             throw new NotImplementedException();
         }
 

@@ -6,7 +6,7 @@ namespace ConsoleInterface
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             WelcomeText();
             PlayerInfoModel player1 = CreatePlayer("Player 1");
@@ -26,7 +26,7 @@ namespace ConsoleInterface
 
             PlayerInfoModel output = new PlayerInfoModel();
 
-            output.UserName = AskForUsersName();
+            output.Username = AskForUsersName();
 
             GameLogic.DrawGrid(output);
 
