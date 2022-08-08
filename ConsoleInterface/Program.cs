@@ -28,7 +28,7 @@ namespace ConsoleInterface
 
             output.Username = AskForUsersName();
 
-            GameLogic.DrawGrid(output);
+            GameLogic.PopulateGrid(output);
 
             PlaceShips(output); 
 
@@ -61,14 +61,9 @@ namespace ConsoleInterface
             } while (model.ShipList.Count < 5);
         }
 
-        static void Fire()
+        private static void DrawGrid()
         {
-
-        }
-
-        static void CanFire()
-        {
-
+            
         }
 
         static void PrintScore()

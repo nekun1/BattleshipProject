@@ -9,7 +9,7 @@ namespace BattleLibDotnet
 {
     public static class GameLogic
     {
-        public static void DrawGrid(PlayerInfoModel player)
+        public static void PopulateGrid(PlayerInfoModel player)
         {
             List<string> letters = new List<string>
             {
@@ -20,7 +20,7 @@ namespace BattleLibDotnet
                 "E",
             };
 
-            List<int> numbers = new List<int>
+           List<int> numbers = new List<int>
             {
                 1,
                 2,
@@ -41,17 +41,21 @@ namespace BattleLibDotnet
         public static bool PlaceShip(PlayerInfoModel model, string location)
         {
             string locationLetter = location.Substring(0, 1);
-            Console.WriteLine(locationLetter);
             int locationNumber = Int32.Parse(location.Substring(1, 1));
             Console.WriteLine(locationNumber);
-            GridSpotModel ship = new GridSpotModel
+            if((locationLetter == "A" || locationLetter == "B" || locationLetter == "C" || locationLetter == "D" || locationLetter == "E") && (locationNumber == 1 || locationNumber == 2 || locationNumber == 3 || locationNumber == 4 || locationNumber == 5))
+            {
+                GridSpotModel spot = new GridSpotModel
             {
                 SpotLetter = locationLetter,
                 SpotNumber = locationNumber,
                 Status = GridSpotStatus.Empty
             };
-            model.ShipList.Add(ship);
-            throw new NotImplementedException();
+                model.ShipList.Add(spot);
+                return true;
+            }
+            else 
+                return false;
         }
 
         private static void AddGridSpot(PlayerInfoModel model, string letter, int number)
@@ -63,6 +67,16 @@ namespace BattleLibDotnet
                 Status = GridSpotStatus.Empty
             };
             model.ShotGrid.Add(spot);
+        }
+
+                static void Fire()
+        {
+
+        }
+
+        static void CanFire()
+        {
+
         }
     }
 }
