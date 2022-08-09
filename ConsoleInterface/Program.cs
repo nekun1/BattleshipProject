@@ -11,6 +11,11 @@ namespace ConsoleInterface
             WelcomeText();
             PlayerInfoModel player1 = CreatePlayer("Player 1");
             PlayerInfoModel player2 = CreatePlayer("Player 2");
+            //do
+            //{
+                DrawGrid(player1);
+                GameLogic.MakeMove(player1);
+            //} while (!gameFinished);
             Console.ReadLine();
         }
 
@@ -24,12 +29,11 @@ namespace ConsoleInterface
         {
             Console.WriteLine($"Player information for {playerIdentifier}");
 
-            PlayerInfoModel output = new()
-            {
-                UserName = AskForUsersName()
-            };
+            PlayerInfoModel output = new PlayerInfoModel();
 
-            GameLogic.DrawGrid(output);
+            output.Username = AskForUsersName();
+
+            GameLogic.PopulateGrid(output);
 
             PlaceShips(output); 
 
@@ -66,13 +70,33 @@ namespace ConsoleInterface
             } while (model.ShipList.Count < 5);
         }
 
-        static void Fire()
+        private static void DrawGrid(PlayerInfoModel player)
         {
+            string currentRow = player.FullGrid[0].SpotLetter;
 
-        }
+            foreach(var gridSpot in player.FullGrid)
+            {
+                if(gridSpot.SpotLetter != currentRow)
+                {
+                    Console.WriteLine();
+                    currentRow = gridSpot.SpotLetter;
+                }
 
-        static void CanFire()
-        {
+                if(gridSpot.Status == GridSpotStatus.Empty)
+                {
+                    Console.Write($" {gridSpot.SpotLetter}{gridSpot.SpotNumber} ");
+                }
+                else if (gridSpot.Status == GridSpotStatus.Hit)
+                {
+                    Console.Write(" X ");
+                }
+                else if (gridSpot.Status == GridSpotStatus.Miss)
+                {
+                    Console.Write(" O ");
+                }
+                else
+                    Console.WriteLine("?");
+            }
 
         }
 
