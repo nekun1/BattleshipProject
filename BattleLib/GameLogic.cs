@@ -40,7 +40,26 @@ namespace BattleLib
 
         public static bool PlaceShip(PlayerInfoModel model, string location)
         {
-            throw new NotImplementedException();
+            if (location.Length > 1)
+            {
+                string locationLetter = location.Substring(0, 1).ToUpper();
+                int locationNumber = Int32.Parse(location.Substring(1, 1));
+                if ((locationLetter == "A" || locationLetter == "B" || locationLetter == "C" || locationLetter == "D" || locationLetter == "E") && (locationNumber == 1 || locationNumber == 2 || locationNumber == 3 || locationNumber == 4 || locationNumber == 5))
+                {
+                    GridSpotModel spot = new GridSpotModel
+                    {
+                        SpotLetter = locationLetter,
+                        SpotNumber = locationNumber,
+                        Status = GridSpotStatus.Empty
+                    };
+                    model.ShipList.Add(spot);
+                    return true;
+                }
+                else
+                    return false;
+            }
+            else
+                return false;
         }
 
         private static void AddGridSpot(PlayerInfoModel model, string letter, int number)
@@ -52,6 +71,15 @@ namespace BattleLib
                 Status = GridSpotStatus.Empty
             };
             model.ShotGrid.Add(spot);
+        }
+        static void Fire()
+        {
+
+        }
+
+        static void CanFire()
+        {
+
         }
     }
 }

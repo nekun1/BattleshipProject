@@ -1,4 +1,6 @@
 ﻿using System;
+using BattleLib;
+using BattleLib.Models;
 using BattleLibDotnet;
 using BattleLibDotnet.Models;
 
@@ -11,6 +13,11 @@ namespace ConsoleInterface
             WelcomeText();
             PlayerInfoModel player1 = CreatePlayer("Player 1");
             PlayerInfoModel player2 = CreatePlayer("Player 2");
+            //do
+            //{
+                DrawGrid(player1);
+                GameLogic.MakeMove(player1);
+            //} while (!gameFinished);
             Console.ReadLine();
         }
 
@@ -40,7 +47,11 @@ namespace ConsoleInterface
         static string AskForUsersName()
         {
             Console.WriteLine("What's your name?");
-            string input = Console.ReadLine();
+            string? input = Console.ReadLine();
+            if(input == null)
+            {
+                input = "";
+            }
             return input;
         }
 
@@ -49,7 +60,7 @@ namespace ConsoleInterface
             do
             {
                 Console.Write($"Where do you want to place your ship number {model.ShipList.Count + 1}: ");
-                string location = Console.ReadLine();
+                string? location = Console.ReadLine();
 
                 bool isValidLocation = GameLogic.PlaceShip(model, location);
 
@@ -60,10 +71,35 @@ namespace ConsoleInterface
 
             } while (model.ShipList.Count < 5);
         }
+        }
 
         private static void DrawGrid()
         {
-            
+            string currentRow = player.FullGrid[0].SpotLetter;
+
+            foreach(var gridSpot in player.FullGrid)
+            {
+                if(gridSpot.SpotLetter != currentRow)
+                {
+                    Console.WriteLine();
+                    currentRow = gridSpot.SpotLetter;
+                }
+
+                if(gridSpot.Status == GridSpotStatus.Empty)
+                {
+                    Console.Write($" {gridSpot.SpotLetter}{gridSpot.SpotNumber} ");
+                }
+                else if (gridSpot.Status == GridSpotStatus.Hit)
+                {
+                    Console.Write(" X ");
+                }
+                else if (gridSpot.Status == GridSpotStatus.Miss)
+                {
+                    Console.Write(" O ");
+                }
+                else
+                    Console.WriteLine("?");
+            }
         }
 
         static void PrintScore()

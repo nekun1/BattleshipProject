@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BattleLibDotnet\BattleLibDotnet.csproj" />
+    <ProjectReference Include="..\BattleLib\BattleLib.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
