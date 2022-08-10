@@ -71,9 +71,8 @@ namespace ConsoleInterface
 
             } while (model.ShipList.Count < 5);
         }
-        }
-
-        private static void DrawGrid()
+        
+        private static void DrawGrid(PlayerInfoModel player)
         {
             string currentRow = player.FullGrid[0].SpotLetter;
 
@@ -85,6 +84,21 @@ namespace ConsoleInterface
                     currentRow = gridSpot.SpotLetter;
                 }
 
+                if(gridSpot.Status == GridSpotStatus.Empty)
+                {
+                    Console.Write($" {gridSpot.SpotLetter}{gridSpot.SpotNumber} ");
+                }
+                else if (gridSpot.Status == GridSpotStatus.Hit)
+                {
+                    Console.Write(" X ");
+                }
+                else if (gridSpot.Status == GridSpotStatus.Miss)
+                {
+                    Console.Write(" O ");
+                }
+                else
+                    Console.WriteLine("?");
+            }
                 if(gridSpot.Status == GridSpotStatus.Empty)
                 {
                     Console.Write($" {gridSpot.SpotLetter}{gridSpot.SpotNumber} ");
