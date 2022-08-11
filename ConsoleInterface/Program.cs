@@ -72,9 +72,9 @@ namespace ConsoleInterface
 
         private static void DrawGrid(PlayerInfoModel player)
         {
-            string currentRow = player.FullGrid[0].SpotLetter;
+            string currentRow = player.Grid[0].SpotLetter;
 
-            foreach(var gridSpot in player.FullGrid)
+            foreach(var gridSpot in player.Grid)
             {
                 if(gridSpot.SpotLetter != currentRow)
                 {

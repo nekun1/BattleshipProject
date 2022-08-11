@@ -38,25 +38,43 @@ namespace BattleLib
             }
         }
 
-        public static void MakeMove(PlayerInfoModel player1)
+        public static void MakeMove(PlayerInfoModel player, PlayerInfoModel opponent)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Where would you like to take your shot?");
+            string shotLocation = Console.ReadLine();
+            string locationLetter = shotLocation.Substring(0, 1).ToUpper();
+            int locationNumber = Int32.Parse(shotLocation.Substring(1, 1));
+            foreach(var gridSpot in opponent.ShipList)
+            {
+                if (gridSpot.SpotLetter == locationLetter && gridSpot.SpotNumber == locationNumber)
+                {
+                    if (gridSpot.Status == GridSpotStatus.Empty)
+                    {
+                        
+                    }
+                }
+            }
         }
 
         public static bool PlaceShip(PlayerInfoModel model, string location)
         {
-            string locationLetter = location.Substring(0, 1).ToUpper();
-            int locationNumber = Int32.Parse(location.Substring(1, 1));
-            if ((locationLetter == "A" || locationLetter == "B" || locationLetter == "C" || locationLetter == "D" || locationLetter == "E") && (locationNumber == 1 || locationNumber == 2 || locationNumber == 3 || locationNumber == 4 || locationNumber == 5))
+            if (location.Length > 1)
             {
-                GridSpotModel spot = new GridSpotModel
+                string locationLetter = location.Substring(0, 1).ToUpper();
+                int locationNumber = Int32.Parse(location.Substring(1, 1));
+                if ((locationLetter == "A" || locationLetter == "B" || locationLetter == "C" || locationLetter == "D" || locationLetter == "E") && (locationNumber == 1 || locationNumber == 2 || locationNumber == 3 || locationNumber == 4 || locationNumber == 5))
                 {
-                    SpotLetter = locationLetter,
-                    SpotNumber = locationNumber,
-                    Status = GridSpotStatus.Empty
-                };
-                model.ShipList.Add(spot);
-                return true;
+                    GridSpotModel spot = new GridSpotModel
+                    {
+                        SpotLetter = locationLetter,
+                        SpotNumber = locationNumber,
+                        Status = GridSpotStatus.Empty
+                    };
+                    model.ShipList.Add(spot);
+                    return true;
+                }
+                else
+                    return false;
             }
             else
                 return false;
@@ -70,7 +88,7 @@ namespace BattleLib
                 SpotNumber = number,
                 Status = GridSpotStatus.Empty
             };
-            model.FullGrid.Add(spot);
+            model.Grid.Add(spot);
         }
         static void Fire()
         {
