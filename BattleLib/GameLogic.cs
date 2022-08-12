@@ -40,19 +40,19 @@ namespace BattleLib
 
         public static void MakeMove(PlayerInfoModel player, PlayerInfoModel opponent)
         {
-            Console.WriteLine("Where would you like to take your shot?");
-            string shotLocation = Console.ReadLine();
-            string locationLetter = shotLocation.Substring(0, 1).ToUpper();
-            int locationNumber = Int32.Parse(shotLocation.Substring(1, 1));
+            (string locationLetter, int locationNumber) = GetShotLocation();
             foreach(var gridSpot in opponent.ShipList)
             {
                 if (gridSpot.SpotLetter == locationLetter && gridSpot.SpotNumber == locationNumber)
                 {
-                    if (gridSpot.Status == GridSpotStatus.Empty)
+                    foreach(var grid in player.Grid)
                     {
-                        
+                        if (grid.SpotLetter == locationLetter && grid.SpotNumber == locationNumber)
+                        {
+                            grid.Status = GridSpotStatus.Hit;
+                        }
                     }
-                }
+                } 
             }
         }
 
@@ -79,6 +79,7 @@ namespace BattleLib
             else
                 return false;
         }
+
 
         private static void AddGridSpot(PlayerInfoModel model, string letter, int number)
         {
