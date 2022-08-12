@@ -1,8 +1,6 @@
 ﻿using System;
 using BattleLib;
 using BattleLib.Models;
-using BattleLibDotnet;
-using BattleLibDotnet.Models;
 
 namespace ConsoleInterface
 {
@@ -85,21 +83,6 @@ namespace ConsoleInterface
                     currentRow = gridSpot.SpotLetter;
                 }
 
-                if(gridSpot.Status == GridSpotStatus.Empty)
-                {
-                    Console.Write($" {gridSpot.SpotLetter}{gridSpot.SpotNumber} ");
-                }
-                else if (gridSpot.Status == GridSpotStatus.Hit)
-                {
-                    Console.Write(" X ");
-                }
-                else if (gridSpot.Status == GridSpotStatus.Miss)
-                {
-                    Console.Write(" O ");
-                }
-                else
-                    Console.WriteLine("?");
-            }
                 if(gridSpot.Status == GridSpotStatus.Empty)
                 {
                     Console.Write($" {gridSpot.SpotLetter}{gridSpot.SpotNumber} ");

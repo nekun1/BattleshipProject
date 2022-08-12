@@ -99,14 +99,5 @@ namespace BattleLib
         {
 
         }
-        static void Fire()
-        {
-
-        }
-
-        static void CanFire()
-        {
-
-        }
     }
 }
