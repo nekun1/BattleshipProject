@@ -14,7 +14,7 @@ namespace ConsoleInterface
             //do
             //{
                 DrawGrid(player1);
-                GameLogic.MakeMove(player1, player2);
+                GameLogic.TakeShot(player1, player2);
                 DrawGrid(player1);
             //} while (!gameFinished);
             Console.ReadLine();

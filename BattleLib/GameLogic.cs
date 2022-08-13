@@ -38,7 +38,7 @@ namespace BattleLib
             }
         }
 
-        public static void MakeMove(PlayerInfoModel player, PlayerInfoModel opponent)
+        public static void TakeShot(PlayerInfoModel player, PlayerInfoModel opponent)
         {
             (string locationLetter, int locationNumber) = GetShotLocation();
             foreach(var gridSpot in opponent.ShipList)
@@ -54,6 +54,15 @@ namespace BattleLib
                     }
                 } 
             }
+        }
+
+        private static (string locationLetter, int locationNumber) GetShotLocation()
+        {
+            Console.WriteLine("Where would you like to take your shot?");
+            string shotLocation = Console.ReadLine();
+            string locationLetter = shotLocation.Substring(0, 1).ToUpper();
+            int locationNumber = Int32.Parse(shotLocation.Substring(1, 1));
+            return (locationLetter, locationNumber);
         }
 
         public static bool PlaceShip(PlayerInfoModel model, string location)
