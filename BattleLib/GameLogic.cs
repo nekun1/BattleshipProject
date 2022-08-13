@@ -38,6 +38,12 @@ namespace BattleLib
             }
         }
 
+        public static (PlayerInfoModel, PlayerInfoModel) FlipPlayers(PlayerInfoModel player1, PlayerInfoModel player2)
+        {
+            (player1, player2) = (player2, player1);
+            return (player1, player2);
+        }
+
         public static bool TakeShot(PlayerInfoModel player, PlayerInfoModel opponent)
         {
             (string locationLetter, int locationNumber) = GetShotLocation();

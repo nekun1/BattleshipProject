@@ -11,12 +11,15 @@ namespace ConsoleInterface
             WelcomeText();
             PlayerInfoModel player1 = CreatePlayer("Player 1");
             PlayerInfoModel player2 = CreatePlayer("Player 2");
-            //do
-            //{
+            bool gameFinished = false;
+            do
+            {
                 DrawGrid(player1);
+                Console.ReadLine();
+                Console.Clear();
                 GameLogic.TakeShot(player1, player2);
-                DrawGrid(player1);
-            //} while (!gameFinished);
+                (player1, player2) = GameLogic.FlipPlayers(player1, player2); 
+            } while (!gameFinished);
             Console.ReadLine();
         }
 
