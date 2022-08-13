@@ -38,22 +38,25 @@ namespace BattleLib
             }
         }
 
-        public static void TakeShot(PlayerInfoModel player, PlayerInfoModel opponent)
+        public static bool TakeShot(PlayerInfoModel player, PlayerInfoModel opponent)
         {
             (string locationLetter, int locationNumber) = GetShotLocation();
-            foreach(var gridSpot in opponent.ShipList)
+            bool shipPresent = CheckForShot(opponent, locationLetter, locationNumber);
+            bool markedStatus = MarkShot(player, locationLetter, locationNumber, shipPresent);
+            return markedStatus;
+        }
+
+        private static bool CheckForShot(PlayerInfoModel opponent, string locationLetter, int locationNumber)
+        {
+            bool shipPresent = false;
+            foreach (var gridSpot in opponent.ShipList)
             {
                 if (gridSpot.SpotLetter == locationLetter && gridSpot.SpotNumber == locationNumber)
                 {
-                    foreach(var grid in player.Grid)
-                    {
-                        if (grid.SpotLetter == locationLetter && grid.SpotNumber == locationNumber)
-                        {
-                            grid.Status = GridSpotStatus.Hit;
-                        }
-                    }
-                } 
+                    shipPresent = true;
+                }
             }
+            return shipPresent;
         }
 
         private static (string locationLetter, int locationNumber) GetShotLocation()
@@ -63,6 +66,27 @@ namespace BattleLib
             string locationLetter = shotLocation.Substring(0, 1).ToUpper();
             int locationNumber = Int32.Parse(shotLocation.Substring(1, 1));
             return (locationLetter, locationNumber);
+        }
+
+        private static bool MarkShot(PlayerInfoModel player, string locationLetter, int locationNumber, bool shipPresent)
+        {
+            foreach (var gridSpot in player.Grid)
+            {
+                if (gridSpot.SpotLetter == locationLetter && gridSpot.SpotNumber == locationNumber)
+                {
+                    if (shipPresent)
+                    {
+                        gridSpot.Status = GridSpotStatus.Hit;
+                        return true;
+                    }
+                    else
+                    {
+                        gridSpot.Status = GridSpotStatus.Miss;
+                        return false;
+                    }
+                }
+            }
+            return false;
         }
 
         public static bool PlaceShip(PlayerInfoModel model, string location)
