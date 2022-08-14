@@ -101,7 +101,7 @@ namespace BattleLib
             if (location.Length > 1)
             {
                 (string locationLetter, int locationNumber) = SeparateSpot(location);
-                foreach (var ship in model.ShipList)
+                foreach (var ship in model.Grid)
                 {
                     if (locationLetter == ship.SpotLetter && locationNumber == ship.SpotNumber)
                     {

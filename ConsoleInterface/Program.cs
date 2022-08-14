@@ -14,9 +14,7 @@ namespace ConsoleInterface
             bool gameFinished = false;
             do
             {
-                DrawGrid(player1);
-                Console.ReadLine();
-                Console.Clear();
+                DrawGrid(player1); 
                 GameLogic.TakeShot(player1, player2);
                 (player1, player2) = GameLogic.FlipPlayers(player1, player2); 
             } while (!gameFinished);
