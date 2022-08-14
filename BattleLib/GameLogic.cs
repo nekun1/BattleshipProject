@@ -46,7 +46,9 @@ namespace BattleLib
 
         public static bool TakeShot(PlayerInfoModel player, PlayerInfoModel opponent)
         {
-            (string locationLetter, int locationNumber) = GetShotLocation();
+            Console.WriteLine("Where would you like to take your shot?");
+            string shotLocation = Console.ReadLine();
+            (string locationLetter, int locationNumber) = SeparateSpot(shotLocation);
             bool shipPresent = CheckForShot(opponent, locationLetter, locationNumber);
             bool markedStatus = MarkShot(player, locationLetter, locationNumber, shipPresent);
             return markedStatus;
@@ -65,12 +67,10 @@ namespace BattleLib
             return shipPresent;
         }
 
-        private static (string locationLetter, int locationNumber) GetShotLocation()
+        private static (string locationLetter, int locationNumber) SeparateSpot(string location)
         {
-            Console.WriteLine("Where would you like to take your shot?");
-            string shotLocation = Console.ReadLine();
-            string locationLetter = shotLocation.Substring(0, 1).ToUpper();
-            int locationNumber = Int32.Parse(shotLocation.Substring(1, 1));
+            string locationLetter = location.Substring(0, 1).ToUpper();
+            int locationNumber = Int32.Parse(location.Substring(1, 1));
             return (locationLetter, locationNumber);
         }
 
@@ -97,26 +97,26 @@ namespace BattleLib
 
         public static bool PlaceShip(PlayerInfoModel model, string location)
         {
+            bool output = false;
             if (location.Length > 1)
             {
-                string locationLetter = location.Substring(0, 1).ToUpper();
-                int locationNumber = Int32.Parse(location.Substring(1, 1));
-                if ((locationLetter == "A" || locationLetter == "B" || locationLetter == "C" || locationLetter == "D" || locationLetter == "E") && (locationNumber == 1 || locationNumber == 2 || locationNumber == 3 || locationNumber == 4 || locationNumber == 5))
+                (string locationLetter, int locationNumber) = SeparateSpot(location);
+                foreach (var ship in model.ShipList)
                 {
-                    GridSpotModel spot = new GridSpotModel
+                    if (locationLetter == ship.SpotLetter && locationNumber == ship.SpotNumber)
                     {
-                        SpotLetter = locationLetter,
-                        SpotNumber = locationNumber,
-                        Status = GridSpotStatus.Empty
-                    };
-                    model.ShipList.Add(spot);
-                    return true;
+                        GridSpotModel spot = new GridSpotModel
+                        {
+                            SpotLetter = locationLetter,
+                            SpotNumber = locationNumber,
+                            Status = GridSpotStatus.Empty
+                        };
+                        model.ShipList.Add(spot);
+                        output = true;
+                    } 
                 }
-                else
-                    return false;
             }
-            else
-                return false;
+            return output;
         }
 
 

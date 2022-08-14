@@ -52,7 +52,7 @@ namespace ConsoleInterface
             string? input = Console.ReadLine();
             if(input == null)
             {
-                input = "";
+                input = "Default";
             }
             return input;
         }
