@@ -43,7 +43,7 @@ namespace BattleLib
         public static bool PlaceShip(PlayerInfoModel model, string location)
         {
             bool output = false;
-            if (location.Length > 1)
+            if (location.Length == 2)
             {
                 (string locationLetter, int locationNumber) = SeparateLocation(location);
                 foreach (var ship in model.Grid)

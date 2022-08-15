@@ -16,7 +16,8 @@ namespace ConsoleInterface
             {
                 DrawGrid(player1);
                 Shoot(player1, player2);
-                (player1, player2) = GameLogic.FlipPlayers(player1, player2); 
+                Console.Clear();
+                (player1, player2) = GameLogic.FlipPlayers(player1, player2);
             } while (!gameFinished);
             Console.ReadLine();
         }
@@ -26,7 +27,7 @@ namespace ConsoleInterface
             Console.WriteLine("Battleship Project");
             Console.WriteLine("====================");
         }
-        
+
         private static PlayerInfoModel CreatePlayer(string playerIdentifier)
         {
             Console.WriteLine($"Player information for {playerIdentifier}");
@@ -37,7 +38,7 @@ namespace ConsoleInterface
 
             GameLogic.PopulateGrid(output);
 
-            PlaceShips(output); 
+            PlaceShips(output);
 
             Console.Clear();
 
@@ -48,7 +49,7 @@ namespace ConsoleInterface
         {
             Console.WriteLine("What's your name?");
             string? input = Console.ReadLine();
-            if(input == null)
+            if (input == null)
             {
                 input = "Default";
             }
@@ -64,7 +65,7 @@ namespace ConsoleInterface
 
                 bool isValidLocation = GameLogic.PlaceShip(model, location);
 
-                if(isValidLocation == false)
+                if (isValidLocation == false)
                 {
                     Console.WriteLine("That's not a valid location, please try again.");
                 }
@@ -75,14 +76,23 @@ namespace ConsoleInterface
         //Gets the input from the player and calls TakeShot().
         private static void Shoot(PlayerInfoModel player1, PlayerInfoModel player2)
         {
-            Console.WriteLine("Where would you like to take your shot?");
-            string shotLocation = Console.ReadLine();
-            bool shotOutcome = GameLogic.TakeShot(player1, player2, shotLocation);
-            if(shotOutcome == false)
-                Console.WriteLine("You missed!");
-            else
-                Console.WriteLine("You scored!");
-
+            bool shotOutcome = false;
+            bool isValid = false;
+            Console.WriteLine($"\nWhere would you like to take your shot {player1.Username}?");
+            do
+            {
+                string shotLocation = Console.ReadLine();
+                if (shotLocation.Length == 2)
+                {
+                    isValid = true;
+                    shotOutcome = GameLogic.TakeShot(player1, player2, shotLocation);
+                }
+                else
+                    Console.WriteLine("Please enter a valid location");
+            }while(!isValid);
+            string message = shotOutcome == false ? "You missed!" : "You scored!";
+            Console.WriteLine($"{message}\nPress any key to change player");
+            Console.ReadLine();
         }
 
         private static void DrawGrid(PlayerInfoModel player)
