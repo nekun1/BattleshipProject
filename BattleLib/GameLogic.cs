@@ -45,7 +45,7 @@ namespace BattleLib
             bool output = false;
             if (location.Length > 1)
             {
-                (string locationLetter, int locationNumber) = SeparateSpot(location);
+                (string locationLetter, int locationNumber) = SeparateLocation(location);
                 foreach (var ship in model.Grid)
                 {
                     if (locationLetter == ship.SpotLetter && locationNumber == ship.SpotNumber)
@@ -72,19 +72,17 @@ namespace BattleLib
         }
 
         //Fucking mess, checks if a ship is present at specified location via CheckForShot, then uses MarkShot to mark the location on the grid.
-        //TODO: Probably shouldn't be a bool? Also, get the UI specific code the fuck outta there.
-        public static bool TakeShot(PlayerInfoModel player, PlayerInfoModel opponent)
+        //TODO: Probably shouldn't be a bool?
+        public static bool TakeShot(PlayerInfoModel player, PlayerInfoModel opponent, string shotLocation)
         {
-            Console.WriteLine("Where would you like to take your shot?");
-            string shotLocation = Console.ReadLine();
-            (string locationLetter, int locationNumber) = SeparateSpot(shotLocation);
-            bool shipPresent = CheckForShot(opponent, locationLetter, locationNumber);
-            bool markedStatus = MarkShot(player, locationLetter, locationNumber, shipPresent);
+            (string locationLetter, int locationNumber) = SeparateLocation(shotLocation);
+            bool shipPresent = CheckForShip(opponent, locationLetter, locationNumber);
+            bool markedStatus = MarkShotStatus(player, locationLetter, locationNumber, shipPresent);
             return markedStatus;
         }
 
         //Checks if a ship exists at said location.
-        private static bool CheckForShot(PlayerInfoModel opponent, string locationLetter, int locationNumber)
+        private static bool CheckForShip(PlayerInfoModel opponent, string locationLetter, int locationNumber)
         {
             bool shipPresent = false;
             foreach (var gridSpot in opponent.ShipList)
@@ -98,7 +96,7 @@ namespace BattleLib
         }
 
         //Separates the input into two single variables.
-        private static (string locationLetter, int locationNumber) SeparateSpot(string location)
+        private static (string locationLetter, int locationNumber) SeparateLocation(string location)
         {
             string locationLetter = location.Substring(0, 1).ToUpper();
             int locationNumber = int.Parse(location.Substring(1, 1));
@@ -106,8 +104,9 @@ namespace BattleLib
         }
 
         //Marks the location on the grid as either a hit or a miss.
-        private static bool MarkShot(PlayerInfoModel player, string locationLetter, int locationNumber, bool shipPresent)
+        private static bool MarkShotStatus(PlayerInfoModel player, string locationLetter, int locationNumber, bool shipPresent)
         {
+            bool shotStatus = false;
             foreach (var gridSpot in player.Grid)
             {
                 if (gridSpot.SpotLetter == locationLetter && gridSpot.SpotNumber == locationNumber)
@@ -115,16 +114,13 @@ namespace BattleLib
                     if (shipPresent)
                     {
                         gridSpot.Status = GridSpotStatus.Hit;
-                        return true;
+                        shotStatus = true;
                     }
                     else
-                    {
                         gridSpot.Status = GridSpotStatus.Miss;
-                        return false;
-                    }
                 }
             }
-            return false;
+            return shotStatus;
         }
 
         //Adds a spot to the grid, used in PopulateGrid method

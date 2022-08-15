@@ -14,8 +14,8 @@ namespace ConsoleInterface
             bool gameFinished = false;
             do
             {
-                DrawGrid(player1); 
-                GameLogic.TakeShot(player1, player2);
+                DrawGrid(player1);
+                Shoot(player1, player2);
                 (player1, player2) = GameLogic.FlipPlayers(player1, player2); 
             } while (!gameFinished);
             Console.ReadLine();
@@ -71,7 +71,20 @@ namespace ConsoleInterface
 
             } while (model.ShipList.Count < 5);
         }
-        
+
+        //Gets the input from the player and calls TakeShot().
+        private static void Shoot(PlayerInfoModel player1, PlayerInfoModel player2)
+        {
+            Console.WriteLine("Where would you like to take your shot?");
+            string shotLocation = Console.ReadLine();
+            bool shotOutcome = GameLogic.TakeShot(player1, player2, shotLocation);
+            if(shotOutcome == false)
+                Console.WriteLine("You missed!");
+            else
+                Console.WriteLine("You scored!");
+
+        }
+
         private static void DrawGrid(PlayerInfoModel player)
         {
             string currentRow = player.Grid[0].SpotLetter;
