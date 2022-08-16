@@ -46,15 +46,18 @@ namespace BattleLib
             if (location.Length == 2)
             {
                 (string locationLetter, int locationNumber) = SeparateLocation(location);
+                bool shipPresent = CheckForShip(model, locationLetter, locationNumber);
                 foreach (var ship in model.Grid)
                 {
+                    if (shipPresent)
+                        continue;
                     if (locationLetter == ship.SpotLetter && locationNumber == ship.SpotNumber)
                     {
                         GridSpotModel spot = new GridSpotModel
                         {
                             SpotLetter = locationLetter,
                             SpotNumber = locationNumber,
-                            Status = GridSpotStatus.Empty
+                            Status = GridSpotStatus.Ship
                         };
                         model.ShipList.Add(spot);
                         output = true;
@@ -154,7 +157,7 @@ namespace BattleLib
 
         public static PlayerInfoModel DetermineWinner(PlayerInfoModel player1, PlayerInfoModel player2)
         {
-            PlayerInfoModel winner = player1.Points > player2.Points ? winner = player1 : player2;
+            PlayerInfoModel winner = player1.Points > player2.Points ? player1 : player2;
             return winner;
         }
     }
