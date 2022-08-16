@@ -20,9 +20,7 @@ namespace ConsoleInterface
                 (player1, player2) = GameLogic.FlipPlayers(player1, player2);
                 gameFinished = GameLogic.IsGameFinished(player1, player2);
             } while (!gameFinished);
-            PlayerInfoModel winner = GameLogic.DetermineWinner(player1, player2);
-            Console.WriteLine($"Congratulations {winner.Username}, you won!");
-            Console.WriteLine($"It took you {winner.Shots} shots to sink your enemy's ships!");
+            PrintWinner(player1, player2);
             Console.ReadLine();
         }
 
@@ -36,9 +34,10 @@ namespace ConsoleInterface
         {
             Console.WriteLine($"Player information for {playerIdentifier}");
 
-            PlayerInfoModel output = new PlayerInfoModel();
-
-            output.Username = AskForUsersName();
+            PlayerInfoModel output = new()
+            {
+                Username = AskForUsersName()
+            };
 
             GameLogic.PopulateGrid(output);
 
@@ -85,8 +84,8 @@ namespace ConsoleInterface
             Console.WriteLine($"\nWhere would you like to take your shot {player1.Username}?");
             do
             {
-                string shotLocation = Console.ReadLine();
-                if (shotLocation.Length == 2)
+                string? shotLocation = Console.ReadLine();
+                if (shotLocation?.Length == 2)
                 {
                     isValid = true;
                     shotOutcome = GameLogic.TakeShot(player1, player2, shotLocation);
@@ -131,14 +130,16 @@ namespace ConsoleInterface
             Console.WriteLine();
         }
 
-        static void PrintScore()
+        static void PrintWinner(PlayerInfoModel player1, PlayerInfoModel player2)
         {
-
+            PlayerInfoModel winner = GameLogic.DetermineWinner(player1, player2);
+            Console.WriteLine($"Congratulations {winner.Username}, you won!");
+            PrintScore(winner);
         }
 
-        static void PrintStatistics()
+        static void PrintScore(PlayerInfoModel winner)
         {
-
+            Console.WriteLine($"It took you {winner.Shots} shots to sink your enemy's ships!");
         }
     }
 }
