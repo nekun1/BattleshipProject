@@ -135,6 +135,7 @@ namespace ConsoleInterface
             PlayerInfoModel winner = GameLogic.DetermineWinner(player1, player2);
             Console.WriteLine($"Congratulations {winner.Username}, you won!");
             PrintScore(winner);
+            Console.WriteLine("Press any key to exit.");
         }
 
         static void PrintScore(PlayerInfoModel winner)
