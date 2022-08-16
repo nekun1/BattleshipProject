@@ -100,7 +100,14 @@ namespace BattleLib
         private static (string locationLetter, int locationNumber) SeparateLocation(string location)
         {
             string locationLetter = location.Substring(0, 1).ToUpper();
-            int locationNumber = int.Parse(location.Substring(1, 1));
+            int locationNumber;
+            bool locationNumberCheck = int.TryParse(location.Substring(1, 1), out int result);
+            if (locationNumberCheck)
+            {
+                locationNumber = result;
+            }
+            else
+                locationNumber = 0;
             return (locationLetter, locationNumber);
         }
 
