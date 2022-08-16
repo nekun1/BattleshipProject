@@ -115,6 +115,7 @@ namespace BattleLib
                     {
                         gridSpot.Status = GridSpotStatus.Hit;
                         shotStatus = true;
+                        player.Points++;
                     }
                     else
                         gridSpot.Status = GridSpotStatus.Miss;
@@ -133,6 +134,20 @@ namespace BattleLib
                 Status = GridSpotStatus.Empty
             };
             model.Grid.Add(spot);
+        }
+
+        public static bool IsGameFinished(PlayerInfoModel player1, PlayerInfoModel player2)
+        {
+            bool gameFinished = false;
+            if(player1.Points == 5 || player2.Points == 5)
+                gameFinished = true;
+            return gameFinished;
+        }
+
+        public static string DetermineWinner(PlayerInfoModel player1, PlayerInfoModel player2)
+        {
+            string winner = player1.Points > player2.Points ? winner = player1.Username : player2.Username;
+            return winner;
         }
     }
 }

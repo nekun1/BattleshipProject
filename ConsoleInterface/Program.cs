@@ -18,7 +18,10 @@ namespace ConsoleInterface
                 Shoot(player1, player2);
                 Console.Clear();
                 (player1, player2) = GameLogic.FlipPlayers(player1, player2);
+                gameFinished = GameLogic.IsGameFinished(player1, player2);
             } while (!gameFinished);
+            string winner = GameLogic.DetermineWinner(player1, player2);
+            Console.WriteLine($"Congratulations {winner}, you won!");
             Console.ReadLine();
         }
 
@@ -91,6 +94,8 @@ namespace ConsoleInterface
                     Console.WriteLine("Please enter a valid location");
             }while(!isValid);
             string message = shotOutcome == false ? "You missed!" : "You scored!";
+            Console.Clear();
+            DrawGrid(player1);
             Console.WriteLine($"{message}\nPress any key to change player");
             Console.ReadLine();
         }
@@ -122,6 +127,7 @@ namespace ConsoleInterface
                 else
                     Console.WriteLine("?");
             }
+            Console.WriteLine();
         }
 
         static void PrintScore()
