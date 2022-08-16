@@ -78,6 +78,7 @@ namespace BattleLib
             (string locationLetter, int locationNumber) = SeparateLocation(shotLocation);
             bool shipPresent = CheckForShip(opponent, locationLetter, locationNumber);
             bool markedStatus = MarkShotStatus(player, locationLetter, locationNumber, shipPresent);
+            player.Shots++;
             return markedStatus;
         }
 
@@ -144,9 +145,9 @@ namespace BattleLib
             return gameFinished;
         }
 
-        public static string DetermineWinner(PlayerInfoModel player1, PlayerInfoModel player2)
+        public static PlayerInfoModel DetermineWinner(PlayerInfoModel player1, PlayerInfoModel player2)
         {
-            string winner = player1.Points > player2.Points ? winner = player1.Username : player2.Username;
+            PlayerInfoModel winner = player1.Points > player2.Points ? winner = player1 : player2;
             return winner;
         }
     }

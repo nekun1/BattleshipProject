@@ -11,7 +11,7 @@ namespace ConsoleInterface
             WelcomeText();
             PlayerInfoModel player1 = CreatePlayer("Player 1");
             PlayerInfoModel player2 = CreatePlayer("Player 2");
-            bool gameFinished = false;
+            bool gameFinished;
             do
             {
                 DrawGrid(player1);
@@ -20,8 +20,9 @@ namespace ConsoleInterface
                 (player1, player2) = GameLogic.FlipPlayers(player1, player2);
                 gameFinished = GameLogic.IsGameFinished(player1, player2);
             } while (!gameFinished);
-            string winner = GameLogic.DetermineWinner(player1, player2);
-            Console.WriteLine($"Congratulations {winner}, you won!");
+            PlayerInfoModel winner = GameLogic.DetermineWinner(player1, player2);
+            Console.WriteLine($"Congratulations {winner.Username}, you won!");
+            Console.WriteLine($"It took you {winner.Shots} shots to sink your enemy's ships!");
             Console.ReadLine();
         }
 

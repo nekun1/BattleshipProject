@@ -10,6 +10,7 @@ namespace BattleLib.Models
     {
         public string Username { get; set; }
         public int  Points { get; set; }
+        public int Shots { get; set; }
         public List<GridSpotModel> ShipList { get; set; } = new List<GridSpotModel>();
         public List<GridSpotModel> Grid { get; set; } = new List<GridSpotModel>();
     }
