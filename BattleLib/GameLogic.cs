@@ -135,6 +135,19 @@ namespace BattleLib
             return shotStatus;
         }
 
+        //TODO: Very inelegant, not following DRY, this project needs a refactor.
+        public static bool ValidateLocation(PlayerInfoModel model, string location)
+        {
+            bool output = false;
+            (string locationLetter, int locationNumber) = SeparateLocation(location);
+            foreach (var spot in model.Grid)
+            {
+                if (locationLetter == spot.SpotLetter && locationNumber == spot.SpotNumber)
+                    output = true;
+            }
+            return output;
+        }
+
         //Adds a spot to the grid, used in PopulateGrid method
         private static void AddGridSpot(PlayerInfoModel model, string letter, int number)
         {

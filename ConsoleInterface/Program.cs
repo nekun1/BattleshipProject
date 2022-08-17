@@ -85,7 +85,8 @@ namespace ConsoleInterface
             do
             {
                 string? shotLocation = Console.ReadLine();
-                if (shotLocation?.Length == 2)
+                
+                if (shotLocation?.Length == 2 && GameLogic.ValidateLocation(player1, shotLocation) == true)
                 {
                     isValid = true;
                     shotOutcome = GameLogic.TakeShot(player1, player2, shotLocation);
@@ -118,11 +119,11 @@ namespace ConsoleInterface
                 }
                 else if (gridSpot.Status == GridSpotStatus.Hit)
                 {
-                    Console.Write(" X ");
+                    Console.Write(" X  ");
                 }
                 else if (gridSpot.Status == GridSpotStatus.Miss)
                 {
-                    Console.Write(" O ");
+                    Console.Write(" O  ");
                 }
                 else
                     Console.WriteLine("?");
