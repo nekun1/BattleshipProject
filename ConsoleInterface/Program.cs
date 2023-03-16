@@ -1,6 +1,6 @@
 ﻿using System;
-using BattleLib;
-using BattleLib.Models;
+using BattleLibDotnet;
+using BattleLibDotnet.Models;
 
 namespace ConsoleInterface
 {
